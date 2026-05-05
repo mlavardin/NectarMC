@@ -1,6 +1,6 @@
 english bellow
 
-##Download : **[Releases](../../releases)**.
+# Download -> **[Releases](../../releases)**.
 
 # NECTAR-MC — Releases
 
