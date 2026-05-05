@@ -50,8 +50,8 @@ L'interface est une application **bureau (desktop)** moderne, disponible en fran
 
 La documentation complète est disponible dans le dossier **[DOCUMENTATION](./DOCUMENTATION)** de ce dépôt.
 
-- **[Manuel utilisateur](./DOCUMENTATION/manuel)** — Installation, configuration et prise en main de l'interface.
-- **[Guide des trames BDS](./DOCUMENTATION/trames)** — Comment définir et configurer la structure de vos trames de télémétrie.
+- **[Manuel utilisateur](./DOCUMENTATION/manuel.md)** — Installation, configuration et prise en main de l'interface.
+- **[Guide des trames BDS](./DOCUMENTATION/trames.md)** — Comment définir et configurer la structure de vos trames de télémétrie.
 
 ### Téléchargement
 
@@ -147,8 +147,8 @@ The interface is a modern **desktop application**, available in French and Engli
 
 Full documentation is available in the **[DOCUMENTATION](./DOCUMENTATION)** folder of this repository.
 
-- **[User manual](./DOCUMENTATION/manuel)** — Installation, configuration, and interface walkthrough.
-- **[BDS frame guide](./DOCUMENTATION/trames)** — How to define and configure the structure of your telemetry frames.
+- **[User manual](./DOCUMENTATION/manuel.md)** — Installation, configuration, and interface walkthrough.
+- **[BDS frame guide](./DOCUMENTATION/trames.md)** — How to define and configure the structure of your telemetry frames.
 
 ### Download
 
