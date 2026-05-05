@@ -1,0 +1,116 @@
+{
+  "frame_id": "TM_SENSORS_ADV_01",
+  "frame_name": "Télémesure Capteurs Avancés",
+  "frame_size_bytes": 20,
+  "description": "Trame avec fonctions de transfert avancées et coordonnées GPS",
+  "version": "2.1",
+  "fields": [
+    {
+      "name": "temperature_raw",
+      "bit_offset": 0,
+      "bit_length": 12,
+      "data_type": "uint16",
+      "transfer_function": "value*0.1-40",
+      "unit": "°C",
+      "description": "Température avec offset: (raw*0.1)-40",
+      "comment": "Fonction simple: multiplication puis soustraction"
+    },
+    {
+      "name": "pressure_encoded",
+      "bit_offset": 12,
+      "bit_length": 16,
+      "data_type": "uint16",
+      "transfer_function": "(value>>4)*0.5+300",
+      "unit": "hPa",
+      "description": "Pression avec décalage de bits puis conversion",
+      "comment": "Décalage de 4 bits à droite, puis calibration"
+    },
+    {
+      "name": "status_flags",
+      "bit_offset": 28,
+      "bit_length": 4,
+      "data_type": "uint8",
+      "transfer_function": "value&0x0F",
+      "unit": null,
+      "description": "Status avec masque de bits",
+      "comment": "Masque AND pour isoler les 4 bits de poids faible",
+      "enum": {
+        "0": "Tous OK",
+        "1": "Erreur capteur 1",
+        "2": "Erreur capteur 2",
+        "10": "Mode dégradé",
+        "15": "Défaut critique"
+      }
+    },
+    {
+      "name": "acceleration",
+      "bit_offset": 32,
+      "bit_length": 8,
+      "data_type": "uint8",
+      "transfer_function": "pow(value/10, 2)*9.81",
+      "unit": "m/s²",
+      "description": "Accélération au carré puis conversion en m/s²",
+      "comment": "Fonction puissance: mise au carré après normalisation"
+    },
+    {
+      "name": "voltage_conditional",
+      "bit_offset": 40,
+      "bit_length": 8,
+      "data_type": "uint8",
+      "transfer_function": "iff(value>128, (value-128)*0.1, value*0.05)",
+      "unit": "V",
+      "description": "Voltage avec échelle conditionnelle",
+      "comment": "Si > 128: haute résolution, sinon basse résolution"
+    },
+    {
+      "name": "angle_trigonometric",
+      "bit_offset": 48,
+      "bit_length": 8,
+      "data_type": "uint8",
+      "transfer_function": "sin(value*pi/180)*100",
+      "unit": "%",
+      "description": "Conversion angle en pourcentage via sinus",
+      "comment": "Conversion degrés vers radians puis sinus"
+    },
+    {
+      "name": "bitfield_complex",
+      "bit_offset": 56,
+      "bit_length": 8,
+      "data_type": "uint8",
+      "transfer_function": "((value>>2)&0x07)*5 + (value&0x03)",
+      "unit": "units",
+      "description": "Extraction de sous-champs et calcul combiné",
+      "comment": "Bits 2-4: valeur*5, bits 0-1: offset"
+    },
+    {
+      "name": "gps_latitude",
+      "bit_offset": 64,
+      "bit_length": 32,
+      "data_type": "float",
+      "unit": "°",
+      "description": "Latitude GPS en degrés décimaux",
+      "comment": "Coordonnée Nord/Sud, précision ~11cm en float32",
+      "gps_role": "latitude"
+    },
+    {
+      "name": "gps_longitude",
+      "bit_offset": 96,
+      "bit_length": 32,
+      "data_type": "float",
+      "unit": "°",
+      "description": "Longitude GPS en degrés décimaux",
+      "comment": "Coordonnée Est/Ouest, précision ~11cm en float32",
+      "gps_role": "longitude"
+    },
+    {
+      "name": "gps_altitude",
+      "bit_offset": 128,
+      "bit_length": 32,
+      "data_type": "float",
+      "unit": "m",
+      "description": "Altitude GPS en mètres au-dessus du niveau de la mer",
+      "comment": "Altitude MSL, camp de Ger ~150m",
+      "gps_role": "altitude"
+    }
+  ]
+}
