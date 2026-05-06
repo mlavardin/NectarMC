@@ -93,6 +93,8 @@ Pour creer un fichier BDS depuis l'interface :
 
 Le Decomb Builder calcule les offsets des champs et valide la structure avant de generer le JSON.
 
+Un exemple de BDS est disponible ici : [FX99_7_decom.json](./Decom%20Database%20Example/FX99_7_decom.json)
+
 ## Format des trames
 
 Les trames attendues par les routeurs sont documentees dans le fichier suivant :
