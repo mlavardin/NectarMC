@@ -20,7 +20,9 @@ Le fichier `nectar.exe` doit rester dans le meme dossier que les fichiers fourni
 - Le serveur Python, qui gere les routeurs, les decoms et les APIs.
 - Le front de l'application, c'est-a-dire l'interface utilisateur.
 
-Au demarrage, l'application peut prendre quelques secondes le temps de lancer les services internes.
+Au demarrage, l'application peut prendre plusieurs secondes le temps de lancer les services internes.
+
+> Lors du 1er lancement l'application va demander d'autoriser le lancement de Grafana, il faut l'autoriser.
 
 ## Identifiants par defaut
 
