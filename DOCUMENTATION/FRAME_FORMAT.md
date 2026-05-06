@@ -88,7 +88,7 @@ La Payload est la partie personnalible des paquets. C'est ici où l'équipe du p
  
 Si l'utilisateur souhaite décommuter la payload et non simplement la stocker en brut alors, il faut fournir un fichier qui la décrit.
  
-Ce fichier est un json décrivant chaque champ de la payload un exemple ce trouve dans `/document/decomExemple.json`
+Ce fichier est un json décrivant chaque champ de la payload un exemple ce trouve dans : [FX99_7_decom.json](./Decom%20Database%20Example/FX99_7_decom.json)
  
 Pour faciliter la création de la base de donnée qui permettra de décommuter la partie payload du paquet, un module est mis à disposition dans NectarMC (Decomb Module) qui offre une interface de création.
  
