@@ -18,8 +18,8 @@ Une trame Nectar côté bord est composée de trois blocs contigus. **Taille tot
 │    0xEB     │              │              │               |                 |                   │
 └─────────────┴──────────────┴──────────────┴───────────────┴─────────────────┴───────────────────┘
 ```
-> Les clubs doivent implémenter uniquement le Header, la Payload obligatoirement.
-> L'implémentation du CRC côté bord est optionnel. Cependant il est obligatoire d'avoir un CRC16 en sortie du récepteur pour que la trame puisse être ingérée par **NectarMC**
+> Les clubs doivent obligatoirement implémenter le Header et la Payload.
+> L'implémentation du CRC côté bord est optionnel. Cependant il est **obligatoire d'avoir un CRC16 en sortie du récepteur** pour que la trame puisse être ingérée par **NectarMC**
  
 ## Header (5 bytes)
  
@@ -81,8 +81,8 @@ Le Ground Station Flag est codé par un uint8 représenté ainsi :
 ``` 
 bit7    bit6    bit5    bit4    bit3    bit2    bit1    bit0
                                                  |       |       
-                                                 |       └──────── SNR/RSSI
-                                                 └──────────────── Timestamp
+                                                 |       └──────── RSSI
+                                                 └──────────────── SNR
 └──────────────── Réservés ─────────────────┘
 ``` 
 
@@ -257,21 +257,20 @@ La station doit venir lire le gs_flag afin de rajouter en fin de trame des méta
 |:---:|------------------------|:---------------------:|
 | 0   | RSSI                   |        1 Byte         |
 | 1   | SNR                    |        1 Byte         |
-| 2   | Timestamp              |        4 Bytes        |
 | 3–7 | Réservés               |           —           |
 ```
 
-On refait ensuite un calcul du CRC sur l'entièreté de la trame afin de pouvoir contrôle son intégrité plus tard.
+On refait ensuite un calcul du **CRC sur l'entièreté de la trame** afin de pouvoir contrôle son intégrité plus tard.
 
 Voici un exemple de trame avec les métadonnées disponibles actuellement
 ```
-┌────────────────────────────────────────────────────┬───────────────────┬────────────────────────────────────────┬───────────────┐
-│                       HEADER                       │      PAYLOAD      │               METADATA                 │     CONTROL   │
-├─────────────┬─────────────┬─────────┬──────────────┼───────────────────┼────────────────────────────────────────┼───────────────┤
-│   MAGIC     │  Id_mission | gs_flag │ payload_size │                   │  RSSI   │   SNR   │     Timestamp      │     CRC16     │
-│   1 Byte    │   2 Bytes   | 1 Byte  │   1 Byte     │     N Bytes       │ 1 Byte  │ 1 Byte  │      4 Bytes       │    2 Bytes    │
-│    0xEB     │             |         │              │                   │         │         |                    │               │
-└─────────────┴─────────────┴─────────┴──────────────┴───────────────────┴─────────┴─────────┴────────────────────┴───────────────┘
+┌────────────────────────────────────────────────────┬───────────────────┬───────────────────┬───────────────┐
+│                       HEADER                       │      PAYLOAD      │      METADATA     │     CONTROL   │
+├─────────────┬─────────────┬─────────┬──────────────┼───────────────────┼─────────┬─────────┼───────────────┤
+│   MAGIC     │  Id_mission | gs_flag │ payload_size │                   │  RSSI   │   SNR   │     CRC16     │
+│   1 Byte    │   2 Bytes   | 1 Byte  │   1 Byte     │     N Bytes       │ 1 Byte  │ 1 Byte  │    2 Bytes    │
+│    0xEB     │             |         │              │                   │         │         │               │
+└─────────────┴─────────────┴─────────┴──────────────┴───────────────────┴─────────┴─────────┴───────────────┘
 ```
 Si le gs_flag ne prévoit aucun ajout de paramètres dans les métadonnées, alors toute cette section saute.
 
@@ -326,10 +325,9 @@ gs_flag = 0x07 => bits 0, 1, 2 positionnés ce qui demande d'ajouter le RSSI + S
 
 RSSI        = -82 dBm    => uint8 (valeur encodée)          => 0xAE
 SNR         = 7.5 dB     => uint8 (valeur encodée ×10)      => 0x4B
-Timestamp   = 1751270400 => uint32                          => 0x00 0x9D 0x67 0x68
 
-Footer complet (RSSI → SNR → Timestamp) :
-AE  4B  00  9D  67  68
+Footer complet (RSSI → SNR ) :
+AE  4B
 ```
 ---
  
@@ -354,14 +352,15 @@ AE  4B  00  9D  67  68
   "ssid":         99,
   "ssid_str":     "FX99",
   "apid":         7,
-  "gs_flag":      7,
+  "gs_field":
+        {
+            "rssi":  -82,
+            "snr":   7.5,
+        },
   "payload_size": 20,
   "header_hex":   "ebc7180714",
   "payload_hex":  "...",
   "footer_hex":   "ae4b009d6768",
-  "rssi":         -82,
-  "snr":          7.5,
-  "timestamp":    1751270400,
   "crc_hex":      "cdab",
   "frame_hex":    "ebc7180714...ae4b009d6768cdab"
 }
