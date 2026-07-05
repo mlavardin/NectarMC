@@ -104,6 +104,8 @@ Si l'utilisateur souhaite décommuter la payload et non simplement la stocker en
 Ce fichier est un JSON décrivant chaque champ de la payload un exemple se trouve dans : [FX99_7_decom.JSON](./Decom%20Database%20Example/FX99_7_decom.JSON)
  
 Pour faciliter la création de la base de données qui permettra de décommuter la partie payload de la trame, un module est mis à disposition dans **NectarMC** (Decomb Module) qui offre une interface de création.
+
+Ce module est aussi disponible [ICI](https://mlavardin.github.io/NectarMC/) dans une version web afin de pouvoir faire un fichier de décomutation avoir besoin de telecharger **NectarMC**
  
 Côté bord, l'implémentation de la trame devra suivre le format généré dans l'outil et présenté plus bas.
 
