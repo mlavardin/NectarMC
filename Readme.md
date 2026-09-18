@@ -1,4 +1,6 @@
-> **Decomb test page [decomb](https://mlavardin.github.io/NectarMC/)**
+ **Decomb test page [decomb](https://mlavardin.github.io/NectarMC/)**
+
+---
 
 > **English version bellow**
 
